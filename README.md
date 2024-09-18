@@ -1,6 +1,6 @@
 # Multitool Python
-- Install <a href="https://www.python.org/downloads/">Python</a> with the <a href="Img/Python_Path.png">PATH</a> options.<br>
-- Windows 10 & 11 or +
+- Installer <a href="https://www.python.org/downloads/">Python</a> avec le <a href="Img/Python_Path.png">"PATH</a> options".<br>
+- Windows 10 & 11 ou +
 
 ## Installation
 # Fichiers
@@ -22,4 +22,4 @@
 - [1] Informations système
 - [2] Gestionnaire de fichiers
 - [3] Outils réseau
-- More soon..
+- Plus Prochainement..
