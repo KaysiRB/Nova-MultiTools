@@ -3,6 +3,12 @@
 - Windows 10 & 11 or +
 
 ## Installation
+# Fichiers
+- Télécharger le .zip
+- Extraire le dossier 'Nova-MultiTools'
+- Executer le fichier 'setup.py'
+
+# CMD
 - Ouvrir un terminal.
 - Ecrire "git clone https://github.com/KaysiRB/Nova-MultiTools.git"
 - Ecrire "cd Nova-MultiTools"
