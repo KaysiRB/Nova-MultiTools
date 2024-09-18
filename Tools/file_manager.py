@@ -109,8 +109,8 @@ def manage_files():
         print(f"{Fore.CYAN}                                      ║ {Fore.YELLOW}4{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}Déplacer un fichier                 {Fore.CYAN}║")
         print(f"{Fore.CYAN}                                      ║ {Fore.YELLOW}5{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}Supprimer un fichier ou dossier     {Fore.CYAN}║")
         print(f"{Fore.CYAN}                                      ║ {Fore.YELLOW}6{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}Créer un répertoire                 {Fore.CYAN}║")
-        print(f"{Fore.CYAN}                                      ╠═════════════════════════════════════════╣
-        print(f"{Fore.CYAN}                                      ║   Test Of MAJ (0.1.3)")                                                                        ║")
+        print(f"{Fore.CYAN}                                      ╠═════════════════════════════════════════╣")
+        print(f"{Fore.CYAN}                                      ║   Test Of MAJ (0.1.3)                                                                          ║")
         print(f"{Fore.CYAN}                                      ║ {Fore.YELLOW}0{Fore.CYAN} │ {Fore.LIGHTRED_EX}Retour au menu principal            {Fore.CYAN}║")
         print(f"{Fore.CYAN}                                      ╚═════════════════════════════════════════╝{Style.RESET_ALL}")
         print(" ")
