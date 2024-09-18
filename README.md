@@ -1,7 +1,16 @@
 # Multitool Python
+- Install <a href="https://www.python.org/downloads/">Python</a> with the <a href="Img/Python_Path.png">PATH</a> options.<br>
+- Windows 10 & 11 or +
 
 ## Installation
-1. Installez les dépendances : `pip install -r requirements.txt`
+- Ouvrir un terminal.
+- Ecrire "git clone https://github.com/KaysiRB/Nova-MultiTools.git"
+- Ecrire "cd Nova-MultiTools"
+- Ecrire "git pull"
+- Ecrire "python setup.py"
+
+## Utilisation
+- Executer le fichier 'multitool.py'
 
 ## Fonctionnalités
 - [1] Informations système
