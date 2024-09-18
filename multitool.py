@@ -33,6 +33,7 @@ hub = f"""
 
 
 def main():
+    common.check_for_updates()
     while True:
         common.clear_screen()
         print(logo)
