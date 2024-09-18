@@ -33,6 +33,17 @@ hub = f"""
 
 
 def main():
+    import os
+    import sys
+
+    # Détecter le répertoire du script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Changer le répertoire de travail vers celui du script
+    os.chdir(script_dir)
+
+    # Vérifier le répertoire de travail actuel
+    print(f"Répertoire de travail actuel : {os.getcwd()}")
     common.check_for_updates()
     while True:
         common.clear_screen()
