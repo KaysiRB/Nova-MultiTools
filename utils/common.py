@@ -1,14 +1,18 @@
 import os
 import requests
-import webbrowser
 import re
+import subprocess
+import shutil
 from colorama import Fore, Style, init
+import time
+import sys
+import tempfile
 
 init(autoreset=True)
 
-version_tool = "0.0.0"  # La version actuelle du tool
-github_tool = "https://github.com/KaysiRB/Nova-MultiTools"
-url_config = "https://github.com/KaysiRB/Nova-MultiTools/main/utils/common.py"
+version_tool = "0.1.0"  # La version actuelle du tool
+github_repo_url = "https://github.com/KaysiRB/Nova-MultiTools.git"
+url_config = "https://raw.githubusercontent.com/KaysiRB/Nova-MultiTools/main/utils/common.py"
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -28,44 +32,47 @@ def print_warning(message):
 def get_user_input(prompt):
     return input(f"{Fore.YELLOW}{prompt}{Style.RESET_ALL}")
 
-def get_user_choice(prompt, choices):
-    while True:
-        choice = get_user_input(prompt)
-        if choice in choices:
-            return choice
-        else:
-            print_error("Erreur : choix invalide. Veuillez sélectionner une option valide.")
-
 def wait_for_user():
     input(f"{Fore.YELLOW}Appuyez sur Entrée pour continuer...")
 
-def get_current_directory():
-    return os.getcwd()
+def clone_repo(url, temp_dir):
+    """Cloner le dépôt dans un répertoire temporaire."""
+    print_info(f"Clonage du dépôt GitHub pour la mise à jour dans {temp_dir}...")
+    result = subprocess.run(["git", "clone", url, temp_dir], capture_output=True, text=True)
+    if result.returncode == 0:
+        print_success("Clonage réussi.")
+        return True
+    else:
+        print_error(f"Erreur lors du clonage : {result.stderr}")
+        return False
 
-def change_directory(path):
+def update_files(temp_dir):
+    """Remplace les fichiers existants avec ceux du nouveau dépôt."""
     try:
-        os.chdir(path)
-    except FileNotFoundError:
-        print_error(f"Erreur : le répertoire {path} n'existe pas.")
-    except PermissionError:
-        print_error(f"Erreur : vous n'avez pas les autorisations nécessaires pour accéder au répertoire {path}.")
-    except Exception as e:
-        print_error(f"Erreur inconnue : {e}")
+        print_info("Mise à jour des fichiers...")
+        
+        # Liste des fichiers à ignorer pour éviter les erreurs d'accès
+        ignore_patterns = ['.git', 'README.md']  # Ajouter d'autres fichiers ou dossiers à ignorer si nécessaire
 
-def get_file_list(directory):
-    try:
-        return os.listdir(directory)
-    except FileNotFoundError:
-        print_error(f"Erreur : le répertoire {directory} n'existe pas.")
-        return []
-    except PermissionError:
-        print_error(f"Erreur : vous n'avez pas les autorisations nécessaires pour accéder au répertoire {directory}.")
-        return []
+        # Copie des nouveaux fichiers dans le répertoire courant
+        for item in os.listdir(temp_dir):
+            if item not in ignore_patterns:
+                s = os.path.join(temp_dir, item)
+                d = os.path.join(os.getcwd(), item)
+                if os.path.isdir(s):
+                    shutil.copytree(s, d, dirs_exist_ok=True, ignore=shutil.ignore_patterns(*ignore_patterns))
+                else:
+                    shutil.copy2(s, d)
+        
+        # Suppression du répertoire temporaire
+        print_info("Nettoyage des fichiers temporaires...")
+        shutil.rmtree(temp_dir)
+        print_success("Mise à jour réussie !")
     except Exception as e:
-        print_error(f"Erreur inconnue : {e}")
-        return []
-    
+        print_error(f"Erreur lors de la mise à jour des fichiers : {e}")
+
 def check_for_updates():
+    """Vérifie si une mise à jour est disponible et l'applique automatiquement."""
     try:
         # Récupérer la version du fichier distant sur GitHub
         response = requests.get(url_config)
@@ -76,27 +83,32 @@ def check_for_updates():
 
         # Comparer avec la version actuelle
         if new_version != version_tool:
-            print(f"Nouvelle version disponible : {version_tool} -> {new_version}")
-            update_choice = input("Voulez-vous mettre à jour maintenant ? (o/n) : ").lower()
-            
-            if update_choice == 'o':
-                print("Mise à jour en cours...")
-                webbrowser.open(github_tool)  # Ouvre le lien GitHub pour télécharger la nouvelle version
-                
-                # Possibilité de télécharger et remplacer automatiquement
-                os.system(f"git clone {github_tool} temp_update")
-                os.system("cp -r temp_update/* ./")  # Remplace les fichiers avec la nouvelle version
-                os.system("rm -rf temp_update")  # Supprime le répertoire temporaire
-                print("Mise à jour réussie ! Redémarrez l'outil.")
-                exit()
-            else:
-                print("Vous continuez avec la version actuelle.")
+            print_warning(f"Nouvelle version disponible : {version_tool} -> {new_version}")
+            print_info("Clonage du dépôt et mise à jour en cours...")
+
+            # Créer un répertoire temporaire
+            with tempfile.TemporaryDirectory() as temp_dir:
+                if clone_repo(github_repo_url, temp_dir):
+                    update_files(temp_dir)
+
+                    # Temporisation pour donner le temps au système de terminer la mise à jour
+                    print_info("Mise à jour terminée. Redémarrage de l'outil...")
+                    time.sleep(3)  # Attendre 3 secondes pour permettre à l'utilisateur de lire le message
+
+                    # Redémarrer l'outil après la mise à jour
+                    input(f"{Fore.YELLOW}Appuyez sur Entrée pour Redémarrer l'outil...")
+                    wait_for_user()
+                    os.execv(sys.executable, ['python'] + sys.argv)
+                else:
+                    print_error("La mise à jour a échoué. Essayez manuellement.")
         else:
-            print("Vous utilisez déjà la dernière version.")
+            print_success("Vous utilisez déjà la dernière version.")
     
     except requests.exceptions.RequestException as req_err:
-        print(f"Erreur lors de la vérification des mises à jour : {req_err}")
+        print_error(f"Erreur lors de la vérification des mises à jour : {req_err}")
     except AttributeError:
-        print("Erreur lors de l'extraction de la version.")
+        print_error("Erreur lors de l'extraction de la version.")
     except Exception as e:
-        print(f"Erreur inattendue : {e}")
+        print_error(f"Erreur inattendue : {e}")
+
+    wait_for_user()
