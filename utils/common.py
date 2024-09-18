@@ -10,7 +10,7 @@ import tempfile
 
 init(autoreset=True)
 
-version_tool = "0.1.1"  # La version actuelle du tool
+version_tool = "0.1.2"  # La version actuelle du tool
 github_repo_url = "https://github.com/KaysiRB/Nova-MultiTools.git"
 url_config = "https://raw.githubusercontent.com/KaysiRB/Nova-MultiTools/main/utils/common.py"
 
@@ -52,7 +52,7 @@ def update_files(temp_dir):
         print_info("Mise à jour des fichiers...")
         
         # Liste des fichiers à ignorer pour éviter les erreurs d'accès
-        ignore_patterns = ['.git', 'README.md']  # Ajouter d'autres fichiers ou dossiers à ignorer si nécessaire
+        ignore_patterns = ['.git']  # Ajouter d'autres fichiers ou dossiers à ignorer si nécessaire
 
         # Copie des nouveaux fichiers dans le répertoire courant
         for item in os.listdir(temp_dir):
@@ -72,7 +72,7 @@ def update_files(temp_dir):
         print_error(f"Erreur lors de la mise à jour des fichiers : {e}")
 
 def check_for_updates():
-    """Vérifie si une mise à jour est disponible et l'applique automatiquement."""
+    """Vérifie si une mise à jour est disponible et offre la possibilité de l'appliquer."""
     try:
         # Récupérer la version du fichier distant sur GitHub
         response = requests.get(url_config)
@@ -84,23 +84,28 @@ def check_for_updates():
         # Comparer avec la version actuelle
         if new_version != version_tool:
             print_warning(f"Nouvelle version disponible : {version_tool} -> {new_version}")
-            print_info("Clonage du dépôt et mise à jour en cours...")
+            update_choice = get_user_input("Voulez-vous mettre à jour maintenant ? (o/n) : ").lower()
+            
+            if update_choice == 'o':
+                print_info("Clonage du dépôt et mise à jour en cours...")
 
-            # Créer un répertoire temporaire
-            with tempfile.TemporaryDirectory() as temp_dir:
-                if clone_repo(github_repo_url, temp_dir):
-                    update_files(temp_dir)
+                # Créer un répertoire temporaire
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    if clone_repo(github_repo_url, temp_dir):
+                        update_files(temp_dir)
 
-                    # Temporisation pour donner le temps au système de terminer la mise à jour
-                    print_info("Mise à jour terminée. Redémarrage de l'outil...")
-                    time.sleep(3)  # Attendre 3 secondes pour permettre à l'utilisateur de lire le message
+                        # Temporisation pour donner le temps au système de terminer la mise à jour
+                        print_info("Mise à jour terminée. Redémarrage de l'outil...")
+                        time.sleep(3)  # Attendre 3 secondes pour permettre à l'utilisateur de lire le message
 
-                    # Redémarrer l'outil après la mise à jour
-                    input(f"{Fore.YELLOW}Appuyez sur Entrée pour Redémarrer l'outil...")
-                    wait_for_user()
-                    os.execv(sys.executable, ['python'] + sys.argv)
-                else:
-                    print_error("La mise à jour a échoué. Essayez manuellement.")
+                        # Redémarrer l'outil après la mise à jour
+                        input(f"{Fore.YELLOW}Appuyez sur Entrée pour Redémarrer l'outil...")
+                        wait_for_user()
+                        os.execv(sys.executable, ['python'] + sys.argv)
+                    else:
+                        print_error("La mise à jour a échoué. Essayez manuellement.")
+            else:
+                print_info("Vous avez choisi de continuer avec la version actuelle.")
         else:
             print_success("Vous utilisez déjà la dernière version.")
     
