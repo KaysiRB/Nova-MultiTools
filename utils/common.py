@@ -6,7 +6,7 @@ from colorama import Fore, Style, init
 
 init(autoreset=True)
 
-version_tool = "0.1.0"  # La version actuelle du tool
+version_tool = "0.0.0"  # La version actuelle du tool
 github_tool = "https://github.com/KaysiRB/Nova-MultiTools"
 url_config = "https://github.com/KaysiRB/Nova-MultiTools/blob/main/utils/common.py"
 
