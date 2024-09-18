@@ -4,7 +4,7 @@
 
 ## Installation
 # Fichiers
-- Télécharger le .zip
+- Télécharger le .zip (https://github.com/KaysiRB/Nova-MultiTools -> Code -> Download ZIP)
 - Extraire le dossier 'Nova-MultiTools'
 - Executer le fichier 'setup.py'
 
