@@ -10,7 +10,7 @@ import tempfile
 
 init(autoreset=True)
 
-version_tool = "0.1.3"  # La version actuelle du tool
+version_tool = "0.1.2"  # La version actuelle du tool
 github_repo_url = "https://github.com/KaysiRB/Nova-MultiTools.git"
 url_config = "https://raw.githubusercontent.com/KaysiRB/Nova-MultiTools/main/utils/common.py"
 
@@ -47,22 +47,24 @@ def clone_repo(url, temp_dir):
         return False
 
 def update_files(temp_dir):
-    """Remplace les fichiers existants avec ceux du nouveau dépôt."""
+    """Remplace les fichiers existants avec ceux du nouveau dépôt, en ignorant les fichiers .git."""
     try:
         print_info("Mise à jour des fichiers...")
-        
-        # Liste des fichiers à ignorer pour éviter les erreurs d'accès
-        ignore_patterns = ['.git']  # Ajouter d'autres fichiers ou dossiers à ignorer si nécessaire
+
+        # Ignorez les fichiers de contrôle de version .git
+        ignore_patterns = ['.git', '.git/*']
 
         # Copie des nouveaux fichiers dans le répertoire courant
         for item in os.listdir(temp_dir):
-            if item not in ignore_patterns:
-                s = os.path.join(temp_dir, item)
-                d = os.path.join(os.getcwd(), item)
-                if os.path.isdir(s):
-                    shutil.copytree(s, d, dirs_exist_ok=True, ignore=shutil.ignore_patterns(*ignore_patterns))
-                else:
+            s = os.path.join(temp_dir, item)
+            d = os.path.join(os.getcwd(), item)
+            if os.path.isdir(s):
+                shutil.copytree(s, d, dirs_exist_ok=True, ignore=shutil.ignore_patterns(*ignore_patterns))
+            else:
+                try:
                     shutil.copy2(s, d)
+                except PermissionError:
+                    print_warning(f"Accès refusé : {s} (fichier ignoré)")
         
         # Suppression du répertoire temporaire
         print_info("Nettoyage des fichiers temporaires...")
