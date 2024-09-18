@@ -47,28 +47,26 @@ def clone_repo(url, temp_dir):
         return False
 
 def update_files(temp_dir):
-    """Remplace les fichiers existants avec ceux du nouveau dépôt, en ignorant les fichiers .git."""
+    """Remplace les fichiers existants avec ceux du nouveau dépôt."""
     try:
         print_info("Mise à jour des fichiers...")
 
-        # Ignorez les fichiers de contrôle de version .git
-        ignore_patterns = ['.git', '.git/*']
+        # Liste des fichiers à ignorer pour éviter les erreurs d'accès
+        ignore_patterns = ['.git']
 
         # Copie des nouveaux fichiers dans le répertoire courant
         for item in os.listdir(temp_dir):
-            s = os.path.join(temp_dir, item)
-            d = os.path.join(os.getcwd(), item)
-            if os.path.isdir(s):
-                shutil.copytree(s, d, dirs_exist_ok=True, ignore=shutil.ignore_patterns(*ignore_patterns))
-            else:
-                try:
+            if item not in ignore_patterns:  # Ignorer .git et ses contenus
+                s = os.path.join(temp_dir, item)
+                d = os.path.join(os.getcwd(), item)
+                if os.path.isdir(s):
+                    shutil.copytree(s, d, dirs_exist_ok=True)
+                else:
                     shutil.copy2(s, d)
-                except PermissionError:
-                    print_warning(f"Accès refusé : {s} (fichier ignoré)")
         
         # Suppression du répertoire temporaire
         print_info("Nettoyage des fichiers temporaires...")
-        shutil.rmtree(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True)  # Force la suppression sans erreur
         print_success("Mise à jour réussie !")
     except Exception as e:
         print_error(f"Erreur lors de la mise à jour des fichiers : {e}")
@@ -102,7 +100,6 @@ def check_for_updates():
 
                         # Redémarrer l'outil après la mise à jour
                         input(f"{Fore.YELLOW}Appuyez sur Entrée pour Redémarrer l'outil...")
-                        wait_for_user()
                         os.execv(sys.executable, ['python'] + sys.argv)
                     else:
                         print_error("La mise à jour a échoué. Essayez manuellement.")
@@ -117,5 +114,3 @@ def check_for_updates():
         print_error("Erreur lors de l'extraction de la version.")
     except Exception as e:
         print_error(f"Erreur inattendue : {e}")
-
-    wait_for_user()
