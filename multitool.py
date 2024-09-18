@@ -38,6 +38,7 @@ def main():
         common.clear_screen()
         print(logo)
         print(hub)
+        print(common.version_tool)
         choice = common.get_user_input("Choix : ")
 
         if choice == '1':
