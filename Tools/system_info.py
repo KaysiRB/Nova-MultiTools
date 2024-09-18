@@ -2,7 +2,7 @@ import platform
 from colorama import Fore, Style, init
 import psutil
 import os
-
+from utils import common
 init(autoreset=True)
 
 def get_os_info():
@@ -53,29 +53,33 @@ def get_disk_info():
     return disk_info
 
 def show_system_info():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    
-    print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations sur le système ==={Style.RESET_ALL}")
-    os_info = get_os_info()
-    for key, value in os_info.items():
-        print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
-    
-    print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations CPU ==={Style.RESET_ALL}")
-    cpu_info = get_cpu_info()
-    for key, value in cpu_info.items():
-        print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
-    
-    print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations sur la mémoire ==={Style.RESET_ALL}")
-    memory_info = get_memory_info()
-    for key, value in memory_info.items():
-        print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
-
-    print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations sur les disques ==={Style.RESET_ALL}")
-    disk_info = get_disk_info()
-    for device, info in disk_info.items():
-        print(f"\n{Fore.CYAN}Périphérique : {Fore.GREEN}{device}{Style.RESET_ALL}")
-        for key, value in info.items():
+    try:
+        common.clear_screen()
+        
+        print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations sur le système ==={Style.RESET_ALL}")
+        os_info = get_os_info()
+        for key, value in os_info.items():
             print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
-    
-    input(f"\n{Fore.YELLOW}Appuyez sur Entrée pour revenir au menu...")
-
+        
+        print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations CPU ==={Style.RESET_ALL}")
+        cpu_info = get_cpu_info()
+        for key, value in cpu_info.items():
+            print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
+        
+        print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations sur la mémoire ==={Style.RESET_ALL}")
+        memory_info = get_memory_info()
+        for key, value in memory_info.items():
+            print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
+        
+        print(f"\n{Fore.LIGHTMAGENTA_EX}=== Informations sur les disques ==={Style.RESET_ALL}")
+        disk_info = get_disk_info()
+        for device, info in disk_info.items():
+            print(f"\n{Fore.CYAN}Périphérique : {Fore.GREEN}{device}{Style.RESET_ALL}")
+            for key, value in info.items():
+                print(f"{Fore.CYAN}{key} : {Fore.GREEN}{value}{Style.RESET_ALL}")
+        
+        common.wait_for_user()
+    except psutil.Error as e:
+        common.print_error(f"Erreur : impossible d'obtenir les informations système. Vérifiez que vous avez les autorisations nécessaires. Erreur : {e}")
+    except Exception as e:
+        common.print_error(f"Erreur inconnue : {e}")

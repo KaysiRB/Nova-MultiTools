@@ -1,6 +1,7 @@
 import os
 from colorama import Fore, Style, init
 from Tools import system_info, file_manager, network_tools
+from utils import common
 
 init(autoreset=True)
 
@@ -31,15 +32,12 @@ hub = f"""
 {Style.RESET_ALL}"""
 
 
-def os_clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
 def main():
     while True:
-        os_clear()
+        common.clear_screen()
         print(logo)
         print(hub)
-        choice = input(f"{Fore.YELLOW}Choix : ")
+        choice = common.get_user_input("Choix : ")
 
         if choice == '1':
             system_info.show_system_info()
@@ -50,7 +48,7 @@ def main():
         elif choice == '0':
             break
         else:
-            print(f"{Fore.RED}Choix invalide.")
-            input(f"{Fore.YELLOW}Appuyez sur Entrée pour continuer...")
+            common.print_error("Erreur : choix invalide. Veuillez sélectionner une option valide (0-3).")
+            common.wait_for_user()
 
 main()
