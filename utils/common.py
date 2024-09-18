@@ -8,7 +8,7 @@ init(autoreset=True)
 
 version_tool = "0.0.0"  # La version actuelle du tool
 github_tool = "https://github.com/KaysiRB/Nova-MultiTools"
-url_config = "https://github.com/KaysiRB/Nova-MultiTools/blob/main/utils/common.py"
+url_config = "https://github.com/KaysiRB/Nova-MultiTools/main/utils/common.py"
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
