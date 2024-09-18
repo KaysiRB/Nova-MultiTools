@@ -1,7 +1,9 @@
 # Multitool Python
 
 ## Installation
-1. Installez les dépendances : `pip install -r requirements.txt`
+1. Install <a href="https://www.python.org/downloads/">Python</a> with the <a href="Img/Python_Path.png">PATH</a> options.<br>
+   Windows 10 & 11 or +
+2. Installez les dépendances : `pip install -r requirements.txt`
 
 ## Utilisation
 Exécuter le fichier `multitool.py`
