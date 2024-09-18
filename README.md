@@ -8,7 +8,7 @@ Exécuter le fichier `multitool.py`
 
 ## Fonctionnalités
 - [1] Informations système
-  # OS Info
+  * OS Info
   # CPU Info
   # Memory Info
   # Disk Info
