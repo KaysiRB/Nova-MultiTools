@@ -101,5 +101,5 @@
   - <a href="https://discord.gg/b2myvX5hMy">Discord</a><br>
   - <a href="https://github.com/R3DHULK/HULK">DDoS(HULK)</a><br> 
   - Creator: NovaOT (aka. KaysiRB)<br>
-  - Version: 0.2.0
+  - Version: 0.2.0.0
 </p>
