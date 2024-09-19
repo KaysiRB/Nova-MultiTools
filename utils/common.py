@@ -10,7 +10,7 @@ import tempfile
 
 init(autoreset=True)
 
-version_tool = "0.2.0.0"  # La version actuelle du tool
+version_tool = "wyatt le gay"  # La version actuelle du tool
 github_repo_url = "https://github.com/KaysiRB/Nova-MultiTools.git"
 url_config = "https://raw.githubusercontent.com/KaysiRB/Nova-MultiTools/main/utils/common.py"
 
