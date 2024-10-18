@@ -10,6 +10,7 @@
 <h1>🧰・Nécessaire :</h1>
 <h3>Windows :</h3>
 <p>
+- Installer <a href="https://git-scm.com/download/win">Git</a>.<br>
 - Installer <a href="https://www.python.org/downloads/">Python</a> avec le "PATH options".<br>
 - Windows 10 & 11 ou +.<br>
   <img src="Img/Python_Path.png" width="49%"> 
@@ -17,6 +18,7 @@
 
 <h3>Linux :</h3>
 <p>
+- Installer <a href="https://git-scm.com/download/linux">Git</a>.<br>
 - Avoir la dernière version de <a href="https://www.python.org/downloads/">Python</a>.<br>
 - Avoir une version recente de Linux (dernière version -> + de chance de fonctionner).
 </p>
