@@ -35,7 +35,7 @@ def launch_app():
         common.print_error(f"Erreur lors du lancement de l'application : {e}")
 
 def launch_FlashBackFA():
-    url = "https://cfx.re/join/k4aqg7"
+    url = "https://cfx.re/join/k4aqg7" #Lien du serveur a rejoindre
     webbrowser.open(url)
     common.print_success("FlashBackFA lancée avec succès !")
 
