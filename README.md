@@ -86,7 +86,13 @@
   ↳ Scan Ports (scanner les ports)
 
 💥 - DDoS
+  ↳ Website Domain
+  ↳ IP Adress
 
+🎮 - FiveM
+  ↳ Supprimer les dosiers caches
+  ↳ Lancer un serveur en particulier
+  ↳ Lancer FiveM
 ```
 </p>
 
