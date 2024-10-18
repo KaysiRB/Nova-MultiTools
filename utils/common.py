@@ -51,12 +51,10 @@ def update_files(temp_dir):
     try:
         print_info("Mise à jour des fichiers...")
 
-        # Liste des fichiers à ignorer pour éviter les erreurs d'accès
         ignore_patterns = ['.git']
 
-        # Copie des nouveaux fichiers dans le répertoire courant
         for item in os.listdir(temp_dir):
-            if item not in ignore_patterns:  # Ignorer .git et ses contenus
+            if item not in ignore_patterns:
                 s = os.path.join(temp_dir, item)
                 d = os.path.join(os.getcwd(), item)
                 if os.path.isdir(s):
@@ -64,9 +62,8 @@ def update_files(temp_dir):
                 else:
                     shutil.copy2(s, d)
         
-        # Suppression du répertoire temporaire
         print_info("Nettoyage des fichiers temporaires...")
-        shutil.rmtree(temp_dir, ignore_errors=True)  # Force la suppression sans erreur
+        shutil.rmtree(temp_dir, ignore_errors=True)
         print_success("Mise à jour réussie !")
     except Exception as e:
         print_error(f"Erreur lors de la mise à jour des fichiers : {e}")
@@ -74,14 +71,11 @@ def update_files(temp_dir):
 def check_for_updates():
     """Vérifie si une mise à jour est disponible et offre la possibilité de l'appliquer."""
     try:
-        # Récupérer la version du fichier distant sur GitHub
         response = requests.get(url_config)
-        response.raise_for_status()  # Assure qu'il n'y a pas d'erreurs HTTP
+        response.raise_for_status()
 
-        # Extraire la version du tool avec une expression régulière
         new_version = re.search(r'version_tool\s*=\s*"([^"]+)"', response.text).group(1)
 
-        # Comparer avec la version actuelle
         if new_version != version_tool:
             print_warning(f"Nouvelle version disponible : {version_tool} -> {new_version}")
             update_choice = get_user_input("Voulez-vous mettre à jour maintenant ? (o/n) : ").lower()
@@ -89,16 +83,13 @@ def check_for_updates():
             if update_choice == 'o':
                 print_info("Clonage du dépôt et mise à jour en cours...")
 
-                # Créer un répertoire temporaire
                 with tempfile.TemporaryDirectory() as temp_dir:
                     if clone_repo(github_repo_url, temp_dir):
                         update_files(temp_dir)
 
-                        # Temporisation pour donner le temps au système de terminer la mise à jour
                         print_info("Mise à jour terminée. Redémarrage de l'outil...")
-                        time.sleep(3)  # Attendre 3 secondes pour permettre à l'utilisateur de lire le message
+                        time.sleep(3)
 
-                        # Redémarrer l'outil après la mise à jour
                         input(f"{Fore.YELLOW}Appuyez sur Entrée pour Redémarrer l'outil...")
                         os.execv(sys.executable, ['python'] + sys.argv)
                     else:
