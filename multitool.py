@@ -40,13 +40,9 @@ def main():
     import sys
 
 
-    # Détecter le répertoire du script
     script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Changer le répertoire de travail vers celui du script
     os.chdir(script_dir)
 
-    # Vérifier le répertoire de travail actuel
     print(f"Répertoire de travail actuel : {os.getcwd()}")
     common.check_for_updates()
     while True:
@@ -65,7 +61,7 @@ def main():
             DDoS_gui_path = os.path.join(script_dir, 'Tools', 'DDoS.py')
             if os.path.exists(DDoS_gui_path):
                 try:
-                    subprocess.run(['python', DDoS_gui_path])  # Exécute DDoS.py
+                    subprocess.run(['python', DDoS_gui_path])
                 except Exception as e:
                     common.print_error(f"Erreur lors de l'exécution du script : {e}")
             else:
