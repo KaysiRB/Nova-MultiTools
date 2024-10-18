@@ -3,3 +3,4 @@ requests
 psutil
 scapy
 django
+pyfiglet

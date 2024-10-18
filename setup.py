@@ -2,6 +2,9 @@ try:
     import sys
     import os
 
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(script_dir)
+
     print("Installing the python modules required for the Tool:")
 
     if sys.platform.startswith("win"):
@@ -15,5 +18,6 @@ try:
         os.system("python3 multitool.py")
 
 except Exception as e:
-    print(e)
-    os.system("pause")
+    print(f"An error occurred: {e}")
+
+input("Press Enter to exit...")  # Keeps the window open until Enter is pressed

@@ -1,7 +1,7 @@
 import os
 import subprocess
 from colorama import Fore, Style, init
-from Tools import system_info, file_manager, network_tools
+from Tools import system_info, file_manager, network_tools, FiveM
 from utils import common
 
 init(autoreset=True)
@@ -27,6 +27,7 @@ hub = f"""
 {Fore.CYAN}                                      ║ {Fore.YELLOW}2{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}Gestionnaire de fichiers{Fore.CYAN}         ║
 {Fore.CYAN}                                      ║ {Fore.YELLOW}3{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}Outils réseau{Fore.CYAN}                    ║
 {Fore.CYAN}                                      ║ {Fore.YELLOW}4{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}DDoS         {Fore.CYAN}                    ║
+{Fore.CYAN}                                      ║ {Fore.YELLOW}5{Fore.CYAN} │ {Fore.LIGHTWHITE_EX}FiveM        {Fore.CYAN}                    ║
 {Fore.CYAN}                                      ╠══════════════════════════════════════╣
 {Fore.CYAN}                                      ║ {Fore.YELLOW}0{Fore.CYAN} │ {Fore.LIGHTRED_EX}Quitter{Fore.CYAN}                          ║
 {Fore.CYAN}                                      ╚══════════════════════════════════════╝
@@ -61,18 +62,20 @@ def main():
         elif choice == '3':
             network_tools.show_network_menu()
         elif choice == '4':
-            hulk_gui_path = os.path.join(script_dir, 'Tools', 'hulk_gui.py')
-            if os.path.exists(hulk_gui_path):
+            DDoS_gui_path = os.path.join(script_dir, 'Tools', 'DDoS.py')
+            if os.path.exists(DDoS_gui_path):
                 try:
-                    subprocess.run(['python', hulk_gui_path])  # Exécute hulk_gui.py
+                    subprocess.run(['python', DDoS_gui_path])  # Exécute DDoS.py
                 except Exception as e:
                     common.print_error(f"Erreur lors de l'exécution du script : {e}")
             else:
-                common.print_error("Le fichier hulk_gui.py est introuvable.")
+                common.print_error("Le fichier DDoS.py est introuvable.")
+        elif choice == '5':
+            FiveM.ask()
         elif choice == '0':
             break
         else:
-            common.print_error("Erreur : choix invalide. Veuillez sélectionner une option valide (0-3).")
+            common.print_error("Erreur : choix invalide. Veuillez sélectionner une option valide (0-5).")
             common.wait_for_user()
 
 main()

@@ -10,7 +10,6 @@
 <h1>🧰・Nécessaire :</h1>
 <h3>Windows :</h3>
 <p>
-- Installer <a href="https://git-scm.com/downloads">Git</a>.<br>
 - Installer <a href="https://www.python.org/downloads/">Python</a> avec le "PATH options".<br>
 - Windows 10 & 11 ou +.<br>
   <img src="Img/Python_Path.png" width="49%"> 
@@ -18,7 +17,6 @@
 
 <h3>Linux :</h3>
 <p>
-- Avoir <a href="https://git-scm.com/downloads">Git</a>.<br>
 - Avoir la dernière version de <a href="https://www.python.org/downloads/">Python</a>.<br>
 - Avoir une version recente de Linux (dernière version -> + de chance de fonctionner).
 </p>
@@ -101,7 +99,7 @@
 
 <p>
   - <a href="https://discord.gg/b2myvX5hMy">Discord</a><br>
-  - <a href="https://github.com/R3DHULK/HULK">DDoS(HULK)</a><br> 
-  - Creator: NovaOT (aka. KaysiRB)<br>
+  - <a href="https://github.com/Red-company/RDDoS_Tool">DDoS(Red company)</a><br> 
+  - Createur: NovaOT (aka. KaysiRB)<br>
   - Version: 0.2.0.0
 </p>
